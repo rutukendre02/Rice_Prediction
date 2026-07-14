@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rice Classification</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: url('/static/images.jpg') center center / cover no-repeat fixed;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 30, 0, 0.55);
+            z-index: 0;
+        }
+        .card {
+            position: relative;
+            z-index: 1;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(6px);
+            border-radius: 16px;
+            padding: 40px;
+            width: 420px;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.35);
+            text-align: center;
+        }
+        h1 { color: #2e7d32; font-size: 1.8rem; margin-bottom: 8px; }
+        p.subtitle { color: #555; margin-bottom: 28px; font-size: 0.95rem; }
+
+        .upload-area {
+            border: 2px dashed #a5d6a7;
+            border-radius: 12px;
+            padding: 24px;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-bottom: 20px;
+        }
+        .upload-area:hover { background: #f1f8e9; }
+        .upload-area input[type="file"] { display: none; }
+        .upload-area label { cursor: pointer; color: #388e3c; font-weight: 500; }
+        .upload-area .icon { font-size: 2.5rem; display: block; margin-bottom: 8px; }
+
+        #preview {
+            max-width: 100%;
+            max-height: 200px;
+            border-radius: 10px;
+            margin: 12px auto;
+            display: none;
+        }
+
+        button[type="submit"] {
+            background: #2e7d32;
+            color: white;
+            border: none;
+            padding: 12px 32px;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.2s;
+        }
+        button[type="submit"]:hover { background: #1b5e20; }
+
+        .result {
+            margin-top: 24px;
+            padding: 16px;
+            background: #e8f5e9;
+            border-radius: 10px;
+            border-left: 4px solid #2e7d32;
+        }
+        .result p { color: #555; font-size: 0.9rem; }
+        .result h2 { color: #2e7d32; font-size: 1.5rem; margin-top: 4px; }
+        .result img {
+            max-width: 100%;
+            max-height: 180px;
+            border-radius: 8px;
+            margin-top: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>🌾 Rice Classifier</h1>
+        <p class="subtitle">Upload a rice image to identify its variety</p>
+
+        <form action="/predict" method="POST" enctype="multipart/form-data">
+            <div class="upload-area">
+                <span class="icon">📷</span>
+                <input type="file" name="rice_image" id="rice_image" accept="image/*" required>
+                <label for="rice_image">Click to choose an image</label>
+            </div>
+            <img id="preview" src="#" alt="Preview">
+            <button type="submit">Predict</button>
+        </form>
+
+        {% if prediction %}
+        <div class="result">
+            <p>Predicted Rice Variety</p>
+            <h2>{{ prediction }}</h2>
+            {% if image %}
+            <img src="{{ url_for('static', filename='uploads/' + image) }}" alt="Uploaded rice">
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+
+    <script>
+        document.getElementById('rice_image').addEventListener('change', function () {
+            const preview = document.getElementById('preview');
+            const file = this.files[0];
+            if (file) {
+                preview.src = URL.createObjectURL(file);
+                preview.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>
