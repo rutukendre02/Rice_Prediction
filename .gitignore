@@ -1,0 +1,53 @@
+# -----------------------------
+# Python
+# -----------------------------
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# -----------------------------
+# Virtual Environment
+# -----------------------------
+venv/
+.venv/
+env/
+
+# -----------------------------
+# Jupyter Notebook
+# -----------------------------
+.ipynb_checkpoints/
+
+# -----------------------------
+# VS Code
+# -----------------------------
+.vscode/
+
+# -----------------------------
+# Uploaded Images
+# -----------------------------
+static/uploads/*
+!static/uploads/.gitkeep
+
+# -----------------------------
+# Operating System Files
+# -----------------------------
+.DS_Store
+Thumbs.db
+
+# -----------------------------
+# Logs
+# -----------------------------
+*.log
+
+# -----------------------------
+# Dataset (Optional)
+# Uncomment if you don't want to upload the dataset
+# -----------------------------
+# data/
+
+# -----------------------------
+# Model (Ignore only if model size is >100 MB)
+# Uncomment if required
+# -----------------------------
+# artifacts/rice_classifier.keras
