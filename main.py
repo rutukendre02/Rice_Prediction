@@ -9,7 +9,9 @@ app = Flask(__name__)
 app.config["UPLOAD_FOLDER"] = config.UPLOAD_FOLDER
 
 os.makedirs(app.config["UPLOAD_FOLDER"], exist_ok = True)
-
+print("Current directory:", os.getcwd())
+print("Model exists:", os.path.exists(config.MODEL_PATH))
+print("Model path:", config.MODEL_PATH)
 rice_classifier = RiceClassifier()
 
 @app.route("/")
